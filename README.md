@@ -34,7 +34,10 @@ NOTE: In this project some functions and features are not yet added and I'm stil
       on my project. 
 
 You can contact me on below details:
-Mobile: +91 8147675965 (India) available on whatsapp
-Email: bharathkk68@gmail.com
-Linked In: https://www.linkedin.com/in/bharath-k-k-263959188/
-Instagram: ksheerasagarae_bharath (https://www.instagram.com/ksheerasagarae_bharath)
+1. Mobile: +91 8147675965 (India) available on whatsapp
+2. Email: bharathkk68@gmail.com
+3. Linked In: https://www.linkedin.com/in/bharath-k-k-263959188/
+4. Instagram: ksheerasagarae_bharath (https://www.instagram.com/ksheerasagarae_bharath)
+
+
+
