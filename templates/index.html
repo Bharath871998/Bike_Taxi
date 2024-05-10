@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+  {% load static %}
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TWO WHEELS | {% block title %}{% endblock title %}</title>
+    <!-- bootstrap icons -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.0/font/bootstrap-icons.css"
+      rel="stylesheet"
+    />
+    <!-- bootstrap cdn link -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
+    <!-- bootstrap javascript cdn link -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+      crossorigin="anonymous"
+    ></script>
+
+    <style>
+      .navbar-nav .nav-link {
+        color: #000; /* Dark black color */
+        font-weight: 500;
+        cursor: pointer;
+      }
+
+      .navbar-nav .nav-link:hover {
+        background-color: black;
+        color: #e4a11b;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+
+      /* icon border changes */
+      .navbar-toggler:focus {
+        box-shadow: none;
+        border: none;
+      }
+      .navbar-toggler {
+        border: none;
+      }
+
+      /* icon font changes */
+      .navbar-close-icon,
+      .navbar-hamburger-icon {
+        font-size: 35px; /* Adjust icon size */
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg bg-warning fixed-top">
+      <div class="container-fluid">
+        <!-- Navbar Logo -->
+        <span class="navbar-brand mb-0 h1 ms-2 me-auto">2-WHEELS</span>
+        <!-- menu icon button -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02">
+          <span class="navbar-hamburger-icon" style="border: none; color: #000">
+            <i class="bi bi-list"></i>
+          </span>
+          <span class="navbar-close-icon d-none" style="border: none; color: #000">
+            <i class="bi bi-x"></i>
+          </span>
+        </button>
+        <!-- Navbar Links -->
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+          <ul class="navbar-nav mx-auto mb-lg-0">
+            <li class="nav-item ms-3 me-5">
+              <a class="nav-link" href="{% url 'home' %}">HOME</a>
+            </li>
+            <li class="nav-item ms-3 me-5">
+              <a class="nav-link" href="{% url 'aboutus' %}">ABOUT US</a>
+            </li>
+            <li class="nav-item ms-3 me-5">
+              <a class="nav-link" href="{% url 'safety' %}">SAFETY</a>
+            </li>
+            {% if not request.session.is_driver and not request.session.is_customer %}
+            <li class="nav-item ms-3">
+              <a class="nav-link" href="{% url 'signupasdriver' %}">SIGN-UP AS DRIVER</a>
+            </li>
+            {% endif %}
+          </ul>
+          <ul class="navbar-nav mb-lg-0">
+            {% if username %}
+            <li class="nav-item ms-3 me-4">
+              <a class="nav-link" href="#">Hello, {{ username }}</a>
+            </li>
+            <li class="nav-item ms-3 me-4">
+              <a class="nav-link" href="{% url 'logout_view' %}">Logout</a>
+            </li>
+            {% else %}
+            <li class="nav-item ms-3 me-4">
+              <a class="nav-link" href="{% url 'login_form' %}">LOGIN</a>
+            </li>
+            <li class="nav-item ms-3 me-4">
+              <a class="nav-link" href="{% url 'signup' %}">SIGN-UP</a>
+            </li>
+            {% endif %}
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        var navbarToggler = document.querySelector(".navbar-toggler");
+        var navbarCloseIcon = document.querySelector(".navbar-close-icon");
+
+        navbarToggler.addEventListener("click", function () {
+          if (navbarCloseIcon.classList.contains("d-none")) {
+            navbarCloseIcon.classList.remove("d-none");
+            navbarToggler
+              .querySelector(".navbar-hamburger-icon")
+              .classList.add("d-none");
+          } else {
+            navbarCloseIcon.classList.add("d-none");
+            navbarToggler
+              .querySelector(".navbar-hamburger-icon")
+              .classList.remove("d-none");
+          }
+        });
+      });
+    </script>
+    {% block body %} {% endblock body %}
+  </body>
+</html>

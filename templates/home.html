@@ -1,0 +1,94 @@
+{% extends 'index.html'%} {% load static %} {% block body %}
+
+<style>
+  /* Add styles for enhancements */
+  .container {
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    padding: 20px; /* Add some padding */
+    margin-top: 80px; /* Add space from the top */
+  }
+  .gradient-bg {
+    background: linear-gradient(
+      to right,
+      #ffcc00,
+      #000000
+    ); /* Gradient background */
+    color: #fff; /* Light text color */
+    padding: 20px; /* Add padding */
+    border-radius: 10px; /* Rounded corners */
+  }
+</style>
+<!-- Body contents -->
+<div class="container gradient-bg">
+  <div class="row align-items-center">
+    <div class="col-lg-6">
+      <!-- Responsive Image -->
+      <img src="{% static 'images/taxi1.png' %}" class="img-fluid" alt="Bike" style="max-width: 100%; height: auto"/>
+    </div>
+    <div class="col-lg-6">
+      <!-- Text -->
+      <div class="text-center">
+        <p style="font-weight: 600; font-size: 40px" class="fst-italic">Welcome to 2-Wheels <br />India's most trusted and safest Bike Taxi</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% if request.session.is_driver == True %}
+<div class="container gradient-bg text-center mt-3">
+  <p class="lead">Hey Captain! Go <strong>"ON DUTY"</strong> to start earning</p>
+  <div class="row justify-content-center">
+    <div class="col-auto">
+      <div class="form-check form-switch dutyLable border rounded-pill py-2 px-3 d-flex align-items-center">
+        <span id="dutyStatusText" class="me-5">OFF DUTY</span>
+        <input class="form-check-input" type="checkbox" id="dutyToggle" onchange="toggleDutyStatus()"/>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container gradient-bg mt-1 mb-5">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <h1 class="text-center">Driver Dashboard</h1>
+            <!-- Your driver dashboard content goes here -->
+            <div id="notifications"></div>
+        </div>
+    </div>
+</div>
+{% else %}
+<div class="container gradient-bg text-center mt-3">
+  <p class="lead">Get a ride with us today!</p>
+  {% if request.session.username %}
+  <a class="btn btn-dark btn-md" href="{% url 'bookride' %}" style="color: #e4a11b; border: 2px solid #e4a11b">Book Now</a>
+  {% else %}
+  <a class="btn btn-dark btn-md" href="{% url 'login_form' %}" style="color: #e4a11b; border: 2px solid #e4a11b">Book Now</a>
+  {% endif %}
+</div>
+{% endif %}
+
+<script>
+
+  const ws = new WebSocket('ws://' + window.location.host + '/ws/ridenotifications/');
+  
+  ws.onmessage = function(e) {
+      const data = JSON.parse(e.data);
+      const notificationElement = document.createElement("div");
+      notificationElement.className = "alert alert-success mt-3";
+      notificationElement.innerHTML = `<strong>New Ride Alert:</strong> ${data.message.text}`;
+      document.getElementById("notifications").appendChild(notificationElement);
+  }
+
+
+  // toggle functionality to turn on or off the duty
+  function toggleDutyStatus() {
+    var isChecked = document.getElementById("dutyToggle").checked;
+    document.getElementById("dutyStatusText").innerText = isChecked
+      ? "ON DUTY"
+      : "OFF DUTY";
+    console.log("Duty status: " + (isChecked ? "On" : "Off"));
+  }
+</script>
+
+{% endblock body %}

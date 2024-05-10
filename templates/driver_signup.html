@@ -1,0 +1,44 @@
+{% extends "index.html" %} {% block title %}Sign Up as Driver{% endblock title %} 
+{% load static %} 
+{% block body %}
+<style>
+  .bg_gradient {
+    background: linear-gradient(to right, #ffcc00, #000000);
+    border-radius: 10px;
+  }
+
+  .card {
+    border-radius: 10px;
+  }
+</style>
+<body class="d-flex align-items-center justify-content-center vh-100">
+  <div class="container py-5 mt-5">
+    <div class="row justify-content-center">
+      <div class="col-lg-4 col-md-6 col-sm-7">
+        <div class="card">
+          <div class="card-body bg_gradient text-white">
+            <h3 class="card-title text-center">Sign Up as Driver</h3>
+            <form method="post" autocomplete="off">
+              {% csrf_token %}
+              <!-- {{ form.as_p}} -->
+              <div class="mb-3">{{ form.username }} {{ form.username.errors }}</div>
+              <div class="mb-3">{{ form.email }} {{ form.email.errors }}</div>
+              <div class="mb-3">{{ form.mobile }} {{ form.mobile.errors }}</div>
+              <div class="mb-3">{{ form.driving_license }} {{ form.driving_license.errors }}</div>
+              <div class="mb-3">{{ form.vehicle_number }} {{ form.vehicel_number.errors }}</div>
+              <div class="mb-3">{{ form.password }} {{ form.password.errors }}</div>
+              <div class="mb-3">{{ form.confirm_password }} {{ form.confirm_password.errors }}</div>
+              <p class="text-center mb-3">Already a Driver?
+                <a class="text-decoration-none text-info" href="login_form">Login</a>
+              </p>
+              <button type="submit" class="btn btn-dark btn-md d-block mx-auto" style="color: #e4a11b; border: 2px solid #e4a11b">
+                Submit
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+{% endblock body %}
